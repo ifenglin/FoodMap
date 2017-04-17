@@ -36,7 +36,7 @@ html, body {
     margin-top: -20%;
     margin-bottom: 10%;
     height: 40%;
-    width: 15%;
+    width: 25%;
     border: 1px solid #999;
     background-color: rgba(255,255,255,0.5);
 }
@@ -77,8 +77,11 @@ width: 49%;
 font-size: 12px;
 margin-top: 5%;
 }
-#save, #cancel, #download{
+#save, #cancel, #download, #upload{
 width: 100%;
 margin-top: 5%;
 }
-
+#remove{
+width: 10%;
+font-size: 2px;
+}

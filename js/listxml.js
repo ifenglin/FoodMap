@@ -5,10 +5,9 @@ function download_list(save_list){
           var body = document.createElementNS('http://www.w3.org/1999/xhtml', 'list');   
           doc.documentElement.appendChild(body);
           for (sublist of save_list) {
-//              console.log('sublist:'+sublist.tag);
+//              console.log('sublist:'+sublist.sublist_name);
               var node_sublist = document.createElement('sublist');
               var node_sublist_name = document.createTextNode(sublist.sublist_name);
-//              node_sublist.setAttribute('name', sublist.tag); 
               node_sublist.append(node_sublist_name);
               for (item of sublist.places){
 //                  console.log('place:'+item.place.name);
@@ -30,7 +29,7 @@ function download_list(save_list){
       }
 }
 
-function upload_list_action(callback){
+function read_list(callback){
     // callback function is used to wait for FileReader to finish loading
     var uploads = document.getElementById("upload");
     var txt = "";
@@ -66,79 +65,6 @@ function upload_list_action(callback){
     console.log(txt);
 }
 
-//function cook_sublist(places){
-//    var sublist = [];
-//
-//    // Using Promise.map:
-//    Promise.map(places, function(a_place) {
-//        // Promise.map awaits for returned promises as well.
-//        console.log(a_place.childNodes[0].nodeValue+':'+a_place.getAttribute('id'));
-//        return service.getDetails({
-//                placeId: a_place.getAttribute('id')
-//              }, function(place, status) {
-//                if (status === google.maps.places.PlacesServiceStatus.OK) {
-//                    var image = {
-//                      url: place.icon,
-//                      size: new google.maps.Size(25, 25),
-//                      origin: new google.maps.Point(0, 0),
-//                      anchor: new google.maps.Point(0, 0),
-//                      scaledSize: new google.maps.Size(25, 25)
-//                    };
-//
-//                    var marker = new google.maps.Marker({
-//                      map: map,
-//                      icon: image,
-//                      title: place.name,
-//                      position: place.geometry.location
-//                    });
-//                    sublist.push({
-//                        'place': place,
-//                        'marker': marker
-//                    });
-//                } else {
-//                    console.log("Google Places Service failed");
-//                }
-//            });
-//    }).then(function() {
-//        console.log("cook sublist done");
-//        return sublist;
-//    });
-//    
-////    for (var j = 0; j < places.length; j++){
-//////        console.log('j='+j);
-//////        console.log(places[j].childNodes[0].nodeValue+':'+places[j].getAttribute('id'));
-////        service.getDetails({
-////                placeId: places[j].getAttribute('id')
-////          }, function(place, status) {
-////            if (status === google.maps.places.PlacesServiceStatus.OK) {
-////                var image = {
-////                  url: place.icon,
-////                  size: new google.maps.Size(25, 25),
-////                  origin: new google.maps.Point(0, 0),
-////                  anchor: new google.maps.Point(0, 0),
-////                  scaledSize: new google.maps.Size(25, 25)
-////                };
-////
-////                var marker = new google.maps.Marker({
-////                  map: map,
-////                  icon: image,
-////                  title: place.name,
-////                  position: place.geometry.location
-////                });
-////                sublist.push({
-////                    'place': place,
-////                    'marker': marker
-////                });
-////            } else {
-////                console.log("Google Places Service failed");
-////            }
-////      });
-////    }
-////    callback(sublist);
-//}
-
-
-
 function cook_sub_list(sublist_id, places, callback){
     var sub_list = [];
     for (var i=0; i< places.length ; i++){
@@ -148,30 +74,15 @@ function cook_sub_list(sublist_id, places, callback){
                 placeId: a_place.getAttribute('id')
               }, function(place, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    var image = {
-                      url: place.icon,
-                      size: new google.maps.Size(25, 25),
-                      origin: new google.maps.Point(0, 0),
-                      anchor: new google.maps.Point(0, 0),
-                      scaledSize: new google.maps.Size(25, 25)
-                    };
-                    
-                    var marker = createMarkers(place);
-//                    var marker = new google.maps.Marker({
-//                      map: map,
-//                      icon: image,
-//                      title: place.name,
-//                      position: place.geometry.location
-//                    });
-                    
                     var new_place = {
                         'place': place,
-                        'marker': marker
+                        'marker': createMarkers(place)
                     };
-                    bounds.extend(place.geometry.location);
-                    sub_list.push(new_place);
                     console.log('Insert ' + new_place.place.name + ' to list: ' + sublist_id);
+                    sub_list.push(new_place);
                     insert_saved_places_row(sublist_id, new_place);
+                    bounds.extend(place.geometry.location);
+                    map.fitBounds(bounds);
                 } else {
                     console.log("Google Places Service failed: " + status);
                 }
@@ -201,6 +112,7 @@ function cook_list(text){
         var places = node_sublist.getElementsByTagName('place'); 
         cook_sub_list(sublist_id, places, function(sub_list){
             new_list.push({
+                'sublist_id' : i,
                 'sublist_name': sublist_name,
                 'places': sub_list
                 }); 

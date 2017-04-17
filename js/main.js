@@ -7,7 +7,7 @@ var save_list = [];
 var select_list = [];
 var bounds;
 var show_POI="off", show_streets="off";
-var tag_counter=0;
+var sublist_counter=0;
 
 function initMap() {
   var pyrmont = {lat: 52.5200, lng: 13.4550};
@@ -166,8 +166,8 @@ function releaseSelects(){
   select_list = [];
   infowindow.close(map);
 }
-////
-// event handler for clicks on the map
+
+//// event handler for clicks on the map
 var ClickEventHandler = function(map, origin) {
     this.origin = origin;
     this.map = map;
@@ -206,39 +206,7 @@ ClickEventHandler.prototype.searchNearbyPOI = function(placeId) {
 };
 ////
 
-////
-// pause buttons with async thread
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function pauseButtons(more) {
-    var more_button = $('#more');
-    var new_button = $('#new');
-    var time_to_wait = 5000
-  
-  // diable buttons
-    more_button.attr('class', 'btn')
-    more_button.prop('disabled', 'true');
-    new_button.attr('class', 'btn')
-    new_button.prop('disabled', 'true');
-    new_button.text('Searching...');
-//  console.log('Taking a break...');
-    await sleep(time_to_wait);
-//  console.log(time_to_wait+' ms later.');
-    // enable buttons
-    if(more){
-        more_button.prop('disabled', false);
-        more_button.attr('class', 'btn-primary');
-    }
-    new_button.prop('disabled', false);
-    new_button.attr('class', 'btn-danger');
-    new_button.text('New Search');
-}
-////
-
-
-// check if a property exists
+//// check if a property exists
 $.fn.exists = function () {
     return this.length !== 0;
 }
@@ -280,19 +248,19 @@ function processResults(results, status, pagination) {
   }
 }
 
-////
-// manage select list and save list
+//// manage select list and save list
 function saveToList(select_list) {
     var selectorString;
-    tag_counter += 1;
-    sublist_name = 'Area ' + tag_counter;
+    sublist_name = 'Area ' + (sublist_counter+1);
     save_list.push({
+        'sublist_id' : sublist_counter,
         'sublist_name': sublist_name,
         'places': select_list});
-    insert_saved_places_sublist(tag_counter, sublist_name);
+    insert_saved_places_sublist(sublist_counter, sublist_name);
     for (var i = 0; i< select_list.length; i++){
-        insert_saved_places_row(tag_counter, select_list[i]);
+        insert_saved_places_row(sublist_counter, select_list[i]);
     }
+    sublist_counter += 1;
 }
 
 function removeFromList(place_id) {
@@ -300,66 +268,19 @@ function removeFromList(place_id) {
     if (place_index !== -1) {
         console.log('Remove ' + place_id);
         save_list.splice(place_index, 1);
-        $('tr #place_id').remove();
+        remove_saved_list_row(sublist_id, place_id);
     } else {
         console.log('Error: ' + place_id + ' is not in the list.');
     }
 }
 
-function insert_saved_places_sublist(sublist_id, sublist_name){
-    $('#saved_places').append('<th id="' + sublist_id + '">' + sublist_name + '</th>'); 
-}
-
-function insert_saved_places_row(sublist_id, a_place){
-    $('<tr class="clickable-row" id="' + a_place.place.place_id + '"><td>' + a_place.place.name + '</td></tr>').insertAfter('#saved_places th#' + sublist_id).click(function() {
-        var placeId = this.id;
-        geocoder.geocode({'placeId': placeId}, function(results, status) {
-        if (status === google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-            map.setZoom(15);
-            map.setCenter(results[0].geometry.location);
-            infowindow.setContent(getContentString(a_place.place)); 
-            infowindow.open(map, a_place.marker);
-          } else {
-            window.alert('No results found');
-          }
-        } else {
-          window.alert('Geocoder failed due to: ' + status);
-        }
-      });
-    });
-}
-//
-//function insert_saved_places_row(sublist_name, sublist){
-//    $('#saved_places').append('<th>' + sublist_name + '</th>'); 
-//    for (var i = 0; i< sublist.length; i++){
-//        console.log('Save ' + sublist[i].place.name + ': ' + sublist[i].place.place_id);
-//        $('<tr class="clickable-row" id="' + sublist[i].place.place_id + '"><td>' + sublist[i].place.name + '</td></tr>').appendTo('#saved_places').click(function() {
-//            var placeId = this.id;
-//            geocoder.geocode({'placeId': placeId}, function(results, status) {
-//            if (status === google.maps.GeocoderStatus.OK) {
-//              if (results[0]) {
-//                map.setZoom(15);
-//                map.setCenter(results[0].geometry.location);
-//                infowindow.setContent(getContentString(sublist[i].place)); 
-//                infowindow.open(map, sublist[i].marker);
-//              } else {
-//                window.alert('No results found');
-//              }
-//            } else {
-//              window.alert('Geocoder failed due to: ' + status);
-//            }
-//          });
-//        });
-//    }
-//}
 function upload_list(){
     for (marker of markers) {
           marker.setMap(null);
       }
     bounds = new google.maps.LatLngBounds();
     markers = [];
-    upload_list_action( function(cooked_list){
+    read_list( function(cooked_list){
         console.log('Set new save_list with:');
         console.log(cooked_list);
         save_list = cooked_list;
@@ -451,3 +372,33 @@ function createMarkers(place) {
     });
     return marker;
 }
+
+//// pause buttons with async thread
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function pauseButtons(more) {
+    var more_button = $('#more');
+    var new_button = $('#new');
+    var time_to_wait = 5000
+  
+  // diable buttons
+    more_button.attr('class', 'btn')
+    more_button.prop('disabled', 'true');
+    new_button.attr('class', 'btn')
+    new_button.prop('disabled', 'true');
+    new_button.text('Searching...');
+//  console.log('Taking a break...');
+    await sleep(time_to_wait);
+//  console.log(time_to_wait+' ms later.');
+    // enable buttons
+    if(more){
+        more_button.prop('disabled', false);
+        more_button.attr('class', 'btn-primary');
+    }
+    new_button.prop('disabled', false);
+    new_button.attr('class', 'btn-danger');
+    new_button.text('New Search');
+}
+////
