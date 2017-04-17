@@ -1,0 +1,84 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#map {
+    height: 100%;
+}
+#right-panel, #left-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 200%;
+    padding-left: 1%;
+}
+
+#right-panel i {
+    font-size: 12px;
+}
+#right-panel, #left-panel {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    padding: 1%;
+    z-index: 5;
+}
+#right-panel{
+    right: 1%;
+    top: 50%;
+    margin-top: -20%;
+    height: 40%;
+    width: 20%;
+    border: 1px solid #999;
+    background: #fff;
+}
+#left-panel{
+    left: 1%;
+    top: 50%;
+    margin-top: -20%;
+    margin-bottom: 10%;
+    height: 40%;
+    width: 15%;
+    border: 1px solid #999;
+    background-color: rgba(255,255,255,0.5);
+}
+#right-panel h2, #left-panel h2 {
+    font-size: 20px;
+    margin: 1%;
+}
+#inner-panel {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10%;
+    height: 90%;
+    width: 100%;
+    overflow-y: auto;
+}
+#top-panel {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    margin-top: 5%;
+    height: 10%;
+    width: 25%;
+    padding: 1%;
+    z-index: 5;
+}
+#more {
+width: 90%;
+margin-left: 5%;
+}
+#new {
+width: 100%;
+margin-top: 10%;
+}
+#poi,#street{
+width: 49%;
+font-size: 12px;
+margin-top: 5%;
+}
+#save, #cancel, #download{
+width: 100%;
+margin-top: 5%;
+}
+
