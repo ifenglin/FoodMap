@@ -25,7 +25,7 @@ function download_list(save_list){
           var blob = new Blob([xmlText], {type: "text/plain;charset=utf-8"});
           saveAs(blob, "my_list.xml");
       } else {
-          console.log('Download has been requested but the list is empty.');
+          window.alert('Download has been requested but the list is empty.');
       }
 }
 

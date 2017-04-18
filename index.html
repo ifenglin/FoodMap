@@ -53,9 +53,16 @@
                 </tbody>
             </table>
         </div>
+        <div class="dropdown">
+            <button class="btn-primary dropbtn">Manage</button>
+            <div class="dropdown-content">
+                <a onclick="document.getElementById('upload').click();" >Upload</a>
+                <a id="download" > Download </a> 
+                <a id="edit"> Edit </a> 
+                <a id="clean"> Clean </a>    
+            </div>
+        </div>
         <input type="file" id="upload" style="display: none;" onchange="upload_list();" />
-        <input type="button" value="Upload your list" class="btn-info" onclick="document.getElementById('upload').click();" />
-        <button id="download" class="btn-info"> Download </button> 
         <button id="save" class="btn-warning"> Save to the list! </button> 
         <button id="cancel" class="btn-default"> Cancel </button> 
     </div>
@@ -77,7 +84,6 @@
         <button id="new" class="btn-danger">New Search</button>
         <button id="poi" class="btn-info"> Show POIs </button> 
         <button id="street" class="btn-info"> Show Streets </button> 
-    </div>
     </div>
   </body>
 </html>
