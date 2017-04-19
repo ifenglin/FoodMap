@@ -29,23 +29,29 @@ function initMap() {
   $('#new').click(function(){
       newSearch(map.getCenter());
   });
-    
+  
+
   // register POI button click event
   var POI_button = $('#poi');
+  var message_panel = $('#message-panel');
+  message_panel.hide();
   POI_button.click(function(){
     if(show_POI=='off'){
         show_POI = 'on';
         POI_button.text('Hide POIs');
+        var text = "Click on a point of interest to search nearby restaurants."
+        message_panel.text(text).show();
     } else {
         show_POI = 'off';
         POI_button.text('Show POIs');
+        message_panel.text(text).hide();
     }
-    var newStyles = getMapOptions(show_POI, show_streets)
+    var newStyles = getMapOptions(show_POI, show_streets);
     map.setOptions({styles: newStyles});
   });
     
   // register street button click event
-  street_button = $('#street');
+  var street_button = $('#street');
   street_button.click(function(){
     if(show_streets=='off'){
         show_streets = 'on';
@@ -60,32 +66,38 @@ function initMap() {
   
   // register POI click event
   var clickHandler = new ClickEventHandler(map, pyrmont);
-    
   var save_button = $('#save');
   var cancel_button = $('#cancel');
-  var download_button = $('#download');
   save_button.hide();
   cancel_button.hide();
-  download_button.hide();
   save_button.click(function(){
       saveToList(select_list);
       releaseSelects();
       save_button.hide();
       cancel_button.hide();
-      if(save_list.length !== 0 ){
-          download_button.show();
-      }
   }); 
   cancel_button.click(function(){
       releaseSelects();
-      select_list = [];
       save_button.hide();
       cancel_button.hide();
   }); 
-  download_button.click(function() {
+  $('#download').click(function() {
       download_list(save_list);
   });
-  download_button.hide();
+  $('#edit').click(function(){
+      edit_list(); 
+      $('.dropdown').hide();
+      $('.done').show();
+  });
+  $('#clean').click(function(){
+      clean_list(); 
+  });
+  $('#donebtn').click(function(){
+      edit_list(); 
+      $('.dropdown').show();
+      $('.done').hide();
+  });
+  $('.done').hide();
 }
 
 function getContentString(place){
@@ -183,11 +195,10 @@ var ClickEventHandler = function(map, origin) {
 };
 
 ClickEventHandler.prototype.handleClick = function(event) {
-    console.log('You clicked on: ' + event.latLng);
+//    console.log('You clicked on: ' + event.latLng);
     // If the event has a placeId, use it.
     if (event.placeId) {
       console.log('You clicked on place:' + event.placeId);
-
       // Calling e.stop() on the event prevents the default info window from
       // showing.
       // If you call stop here when there is no placeId you will prevent some
@@ -201,7 +212,12 @@ ClickEventHandler.prototype.searchNearbyPOI = function(placeId) {
       service.getDetails({
                 placeId: placeId
           }, function(place, status) {
-              newSearch(place.geometry.location);
+              if ('geometry' in place){
+                  newSearch(place.geometry.location);
+              } else {
+                  window.alert("Something is wrong with this point of interest. Try again?")
+              }
+              
       });
 };
 ////
@@ -284,6 +300,7 @@ function upload_list(){
         console.log('Set new save_list with:');
         console.log(cooked_list);
         save_list = cooked_list;
+        sublist_counter = cooked_list.length;
     });  
 }
 ////

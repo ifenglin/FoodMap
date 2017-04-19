@@ -50,7 +50,6 @@ function read_list(callback){
             }
         }
         reader.onload = function(event) {
-            console.log(reader.result);
             callback(cook_list(reader.result));
         };      
     } 
@@ -69,7 +68,7 @@ function cook_sub_list(sublist_id, places, callback){
     var sub_list = [];
     for (var i=0; i< places.length ; i++){
         var a_place = places[i];
-        console.log(a_place.childNodes[0].nodeValue+':'+a_place.getAttribute('id'));
+//        console.log(a_place.childNodes[0].nodeValue+':'+a_place.getAttribute('id'));
         service.getDetails({
                 placeId: a_place.getAttribute('id')
               }, function(place, status) {
@@ -84,7 +83,7 @@ function cook_sub_list(sublist_id, places, callback){
                     bounds.extend(place.geometry.location);
                     map.fitBounds(bounds);
                 } else {
-                    console.log("Google Places Service failed: " + status);
+                    window.alert("Google Places Service failed: " + status);
                 }
         });
     }
@@ -116,8 +115,8 @@ function cook_list(text){
                 'sublist_name': sublist_name,
                 'places': sub_list
                 }); 
-            console.log('Sublist '+ sublist_name + ' cooked:');
-            console.log(sub_list)
+//            console.log('Sublist '+ sublist_name + ' cooked:');
+//            console.log(sub_list)
         });
     }
     return new_list;

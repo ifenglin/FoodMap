@@ -6,7 +6,7 @@ function insert_saved_places_sublist(sublist_id, sublist_name){
 function insert_saved_places_row(sublist_id, a_place){
     var place_id = a_place.place.place_id;
     $('<tr class="clickable-row" id="' + sublist_id + '-' + place_id + '"><td>' + a_place.place.name + 
-      '<button class="btn-danger" id="remove" onclick="remove_saved_list_row('+ sublist_id + ',\'' + place_id+ '\')">remove</button>' +
+      '<button class="btn-warning remove" style="display:none" onclick="remove_saved_list_row('+ sublist_id + ',\'' + place_id+ '\')">remove</button>' +
       '</td></tr>').insertAfter('#saved_places th#' + sublist_id).click(function() {
         var placeId = place_id;
         geocoder.geocode({'placeId': placeId}, function(results, status) {
@@ -43,4 +43,14 @@ function remove_saved_list_row(sublist_id, place_id){
         $('#saved_places th#' + sublist_id).remove();
     }
     console.log(save_list);
+}
+
+function clean_list(){
+    save_list = [];
+    sublist_counter = 0;
+    $("#saved_places").empty();
+}
+
+function edit_list(){
+    $(".remove").toggle();
 }

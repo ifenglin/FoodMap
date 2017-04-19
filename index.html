@@ -4,9 +4,6 @@
     <title>Place searches</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-            
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH3kGh3nZPzhWxFzrmnpKPHa9kE2YtXSU&signed_in=true&libraries=places&callback=initMap" async defer></script>
     
     <!-- Latest minified jQuery -->
     <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
@@ -24,15 +21,15 @@
     <script type="text/javascript" src="js/listtools.js"></script>
     
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link> 
         
     <!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript"  src="js/bootstrap.min.js" ></script>
 
     <script type="text/javascript" src="js/main.js"></script>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH3kGh3nZPzhWxFzrmnpKPHa9kE2YtXSU&signed_in=true&libraries=places&callback=initMap" async defer></script>
 
     <!-- My Own CSS style --> 
     <link rel="stylesheet" type="text/css" href="css/style.css"></link>
@@ -42,7 +39,19 @@
     <div id="map">
     </div> 
     <div id="left-panel">  
-        <h2>My list</h2>
+        <h2 style="display: inline">My list</h2>
+        <div class="dropdown">
+            <button class="dropbtn">Manage</button>
+            <div class="dropdown-content">
+                <a onclick="document.getElementById('upload').click();" >Upload</a>
+                <a id="download"> Download </a> 
+                <a id="edit" > Edit </a> 
+                <a id="clean"> Clean </a>    
+            </div>
+        </div>
+        <div class="done">
+            <button class="btn-danger" id="donebtn">Done</button>
+        </div>
         <div id="inner-panel">
             <table class="table table-hover">
                 <thead>
@@ -52,15 +61,6 @@
                 <tbody id="saved_places">
                 </tbody>
             </table>
-        </div>
-        <div class="dropdown">
-            <button class="btn-primary dropbtn">Manage</button>
-            <div class="dropdown-content">
-                <a onclick="document.getElementById('upload').click();" >Upload</a>
-                <a id="download" > Download </a> 
-                <a id="edit"> Edit </a> 
-                <a id="clean"> Clean </a>    
-            </div>
         </div>
         <input type="file" id="upload" style="display: none;" onchange="upload_list();" />
         <button id="save" class="btn-warning"> Save to the list! </button> 
@@ -84,6 +84,9 @@
         <button id="new" class="btn-danger">New Search</button>
         <button id="poi" class="btn-info"> Show POIs </button> 
         <button id="street" class="btn-info"> Show Streets </button> 
+    </div>
+    <div id="message-panel">
+        <p></p>
     </div>
   </body>
 </html>

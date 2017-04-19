@@ -15,7 +15,7 @@ html, body {
 #right-panel i {
     font-size: 12px;
 }
-#right-panel, #left-panel {
+#right-panel, #left-panel, #message-panel {
     font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     padding: 1%;
@@ -28,7 +28,7 @@ html, body {
     height: 40%;
     width: 20%;
     border: 1px solid #999;
-    background: #fff;
+    background-color: rgba(255,255,255,0.5);
 }
 #left-panel{
     left: 1%;
@@ -36,8 +36,19 @@ html, body {
     margin-top: -20%;
     margin-bottom: 10%;
     height: 40%;
-    width: 15%;
+    width: 20%;
     border: 1px solid #999;
+    background-color: rgba(255,255,255,0.5);
+}
+#message-panel{
+    left: 25%;
+    top: 90%;
+    margin-bottom: 5%;
+    min-height: 10px;
+    width: 50%;
+    color: darkorange;
+    font-size: 16px;
+    text-align: center;
     background-color: rgba(255,255,255,0.5);
 }
 #right-panel h2, #left-panel h2 {
@@ -50,7 +61,7 @@ html, body {
     margin: 0;
     margin-bottom: 10%;
     height: 90%;
-    width: 100%;
+    width: 105%;
     overflow-y: auto;
 }
 #top-panel {
@@ -81,7 +92,7 @@ html, body {
     width: 100%;
     margin-top: 5%;
 }
-#remove{
+.remove{
     font-size: 10px;
     margin-left: 5px;
 }
@@ -92,19 +103,20 @@ html, body {
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: #4CAF90;
     color: white;
     width: 100%;
-    padding: 8px;
-    font-size: 14px;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
     border: none;
     cursor: pointer;
 }
 
 /* The container <div> - needed to position the dropdown content */
-.dropdown {
+.dropdown,.done{
     position: relative;
     display: inline-block;
+    float: right;
 }
 
 
@@ -139,5 +151,5 @@ html, body {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: #3e8e91;
 }
