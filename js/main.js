@@ -98,6 +98,24 @@ function initMap() {
       $('.done').hide();
   });
   $('.done').hide();
+    
+  // radius slide
+    var handle = $( "#custom-handle" );
+    var slider_value = $("#slider-value");
+    $( "#slider" ).slider({
+      create: function() {
+        handle.text( $( this ).slider( "value" ) );
+      }, 
+      min: 100,
+      max: 5000,
+      value: 2000,
+      step: 100,
+      slide: function( event, ui ) {
+        slider_value.val( ui.value );
+        handle.text( ui.value );
+      }
+    });
+    slider_value.val(2000);
 }
 
 function getContentString(place){
@@ -122,8 +140,8 @@ function getMapOptions(show_poi, show_streets){
           { visibility: show_poi}
     ]}, {
       stylers: [
-        { hue: "#00ffe6" },
-        { saturation: -20 }
+        { hue: "#ff9100" },
+        { saturation: -10 }
       ]
     },{
       featureType: "road",
@@ -156,9 +174,13 @@ function newSearch(origin){
       bounds = new google.maps.LatLngBounds();
       markers = [];
       $('#right-panel #inner-panel tbody').empty();
-      service.nearbySearch({
+      var radius = $("#slider-value").val();
+      if (!radius){
+          radius = 2000;
+      }
+      service.textSearch({
           location: origin,
-          radius: 2000,
+          radius: radius,
           types: ['cafe', 'restaurant', 'meal_takeaway', 'meal_delivery']
       }, processResults);
 }

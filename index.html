@@ -8,11 +8,10 @@
     <!-- Latest minified jQuery -->
     <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
       
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>  
+      
     <!-- FileSaver --> 
     <script type="text/javascript" src="js/FileSaver.min.js"></script>
-      
-    <!-- Bludbird --> 
-    <script type="text/javascript" src="js/bluebird.min.js"></script>
       
     <!-- list XML --> 
     <script type="text/javascript" src="js/listxml.js"></script>
@@ -21,7 +20,7 @@
     <script type="text/javascript" src="js/listtools.js"></script>
     
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link> 
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         
     <!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript"  src="js/bootstrap.min.js" ></script>
@@ -32,7 +31,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH3kGh3nZPzhWxFzrmnpKPHa9kE2YtXSU&signed_in=true&libraries=places&callback=initMap" async defer></script>
 
     <!-- My Own CSS style --> 
-    <link rel="stylesheet" type="text/css" href="css/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+      
+    <!-- My jQuery CSS style --> 
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
     
   </head>
   <body>
@@ -81,6 +83,11 @@
             </table>
             <button id="more" class="btn">More results</button>
         </div>
+        <div><h5>search radius (in miles) </h5></div>
+        <div id="slider">
+          <div id="custom-handle" class="ui-slider-handle"></div>
+        </div>
+        <div id="slider-value" style="display:hidden"></div>
         <button id="new" class="btn-danger">New Search</button>
         <button id="poi" class="btn-info"> Show POIs </button> 
         <button id="street" class="btn-info"> Show Streets </button> 

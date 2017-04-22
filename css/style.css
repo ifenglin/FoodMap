@@ -43,7 +43,6 @@ html, body {
 #message-panel{
     left: 25%;
     top: 90%;
-    margin-bottom: 5%;
     min-height: 10px;
     width: 50%;
     color: darkorange;
@@ -63,6 +62,7 @@ html, body {
     height: 90%;
     width: 105%;
     overflow-y: auto;
+    margin-bottom: 10%;
 }
 #top-panel {
     font-family: Arial, Helvetica, sans-serif;
@@ -81,7 +81,7 @@ html, body {
 }
 #new {
     width: 100%;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 #poi,#street{
     width: 49%;
@@ -152,4 +152,20 @@ html, body {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
     background-color: #3e8e91;
+}
+
+/* slider */
+#custom-handle {
+    width: 3em;
+    height: 1.6em;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+    background-color: deepskyblue;
+    color: white;
+}
+#slider{
+    max-width: 90%;
+    font-size: 12px;
 }
