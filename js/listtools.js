@@ -52,5 +52,9 @@ function clean_list(){
 }
 
 function edit_list(){
-    $(".remove").toggle();
+    $(".remove").show();
+}
+
+function done_edit_list(){
+    $(".remove").hide();
 }

@@ -93,7 +93,7 @@ function initMap() {
       clean_list(); 
   });
   $('#donebtn').click(function(){
-      edit_list(); 
+      done_edit_list(); 
       $('.dropdown').show();
       $('.done').hide();
   });
@@ -141,7 +141,7 @@ function getMapOptions(show_poi, show_streets){
     ]}, {
       stylers: [
         { hue: "#ff9100" },
-        { saturation: -10 }
+        { saturation: -20 }
       ]
     },{
       featureType: "road",
@@ -178,7 +178,7 @@ function newSearch(origin){
       if (!radius){
           radius = 2000;
       }
-      service.textSearch({
+      service.nearbySearch({
           location: origin,
           radius: radius,
           types: ['cafe', 'restaurant', 'meal_takeaway', 'meal_delivery']

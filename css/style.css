@@ -28,7 +28,7 @@ html, body {
     height: 40%;
     width: 20%;
     border: 1px solid #999;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.7);
 }
 #left-panel{
     left: 1%;
@@ -38,17 +38,18 @@ html, body {
     height: 40%;
     width: 20%;
     border: 1px solid #999;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.7);
 }
 #message-panel{
     left: 25%;
     top: 90%;
     min-height: 10px;
     width: 50%;
-    color: darkorange;
+    color: teal;
+    font-style: bold;
     font-size: 16px;
     text-align: center;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.7);
 }
 #right-panel h2, #left-panel h2 {
     font-size: 20px;
